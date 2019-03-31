@@ -128,46 +128,53 @@ public class JobDao {
 
         String query = "FROM JobEntity WHERE ";
 
-        if(device != null)
+        if(parameterNotNullOrEmpty(device))
         {
             query += " device = '" + device + "'";
             isFirstCond = false;
         }
 
-        if(type != null)
+        if(parameterNotNullOrEmpty(type))
         {
             query += appendAndStatement(isFirstCond);
             query += " type = '" + type + "'";
             isFirstCond = false;
         }
 
-        if(user != null)
+        if(parameterNotNullOrEmpty(user))
         {
             query += appendAndStatement(isFirstCond);
             query += " user = '" + user + "'";
             isFirstCond = false;
         }
 
-        if(timeTo != null)
-        {
-            query += appendAndStatement(isFirstCond);
-            query += " time <= '" + timeTo + "'"; ////////
-            isFirstCond = false;
-        }
-
-        if(timeFrom != null)
+        if(parameterNotNullOrEmpty(timeFrom))
         {
             query += appendAndStatement(isFirstCond);
             query += " time >= '" + timeFrom + "'";
             isFirstCond = false;
         }
 
+        if(parameterNotNullOrEmpty(timeTo))
+        {
+            query += appendAndStatement(isFirstCond);
+            query += " time <= '" + timeTo + "'"; ////////
+            isFirstCond = false;
+        }
+        
         if(isFirstCond)
             return "FROM JobEntity ORDER BY time";
         else
             query+=" ORDER BY time";
 
         return query;
+    }
+
+    private boolean parameterNotNullOrEmpty(String parameter)
+    {
+        if(parameter == null)
+            return false;
+        return !parameter.equals("");
     }
 
     private String appendAndStatement(boolean isFirstCond)

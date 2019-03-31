@@ -1,0 +1,1 @@
+java -jar target\printserv-1.0.jar
