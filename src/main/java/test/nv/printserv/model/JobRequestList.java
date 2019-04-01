@@ -20,10 +20,6 @@ public class JobRequestList {
         return jobRequestList;
     }
 
-    public void setJobRequestList(ArrayList<JobRequest> jobRequestList) {
-        this.jobRequestList = jobRequestList;
-    }
-
     public List<Map<String,Integer>> countAmountForEachUser()
     {
         List<Map<String,Integer>> answerMapList = new ArrayList<>();

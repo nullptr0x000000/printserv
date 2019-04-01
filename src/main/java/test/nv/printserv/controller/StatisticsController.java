@@ -1,7 +1,6 @@
 package test.nv.printserv.controller;
 
 import org.springframework.web.bind.annotation.*;
-import test.nv.printserv.exceptions.JobNotFoundException;
 import test.nv.printserv.hibernate.JobDao;
 import test.nv.printserv.hibernate.JobEntity;
 import test.nv.printserv.model.*;
@@ -28,10 +27,12 @@ public class StatisticsController {
         List<JobAnswer> jobAnswerList = new ArrayList<>();
         List<JobEntity> query = jobDao.findByParameters(device,type,user,timeFrom,timeTo);
 
-        if(!query.isEmpty())
+        if(!query.isEmpty()) {
             for (JobEntity jobEntity : query)
+            {
                 jobAnswerList.add(new JobAnswer(jobEntity));
-        else throw new JobNotFoundException();
+            }
+        }
 
         return jobAnswerList;
     }

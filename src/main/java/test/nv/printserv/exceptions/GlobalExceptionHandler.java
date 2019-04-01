@@ -21,13 +21,6 @@ public class GlobalExceptionHandler {
         return generateJSONError(exception.getMessage());
     }
 
-    @ExceptionHandler(JobNotFoundException.class)
-    @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public String jobNotFoundExceptionHandler(JobNotFoundException exception) {
-        return generateJSONError(exception.getMessage());
-    }
-
     @ExceptionHandler(JobAlreadyExistException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ResponseBody

@@ -27,14 +27,17 @@ public class JobsController {
         List<JobEntity> jobsToDBList = new ArrayList<>();
 
         for(JobRequest jobRequest : jobsXml.getJobRequestList())
-            if (jobRequest.Validate())
+            if (jobRequest.validate())
             {
                 jobsToDBList.add(new JobEntity(jobRequest));
             }
-            else throw new JobValidationException(jobRequest.getValidationError());
+            else {
+                throw new JobValidationException(jobRequest.getValidationError());
+            }
 
-        if (!jobDao.persistList(jobsToDBList))
+        if (!jobDao.persistList(jobsToDBList)) {
             throw new JobAlreadyExistException(jobDao.getExistingJobError());
+        }
 
         return jobsXml.countAmountForEachUser();
     }

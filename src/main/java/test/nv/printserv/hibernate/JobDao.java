@@ -16,57 +16,6 @@ public class JobDao {
 
     public JobDao() {}
 
-    public String getExistingJobError() {
-        return existingJobError;
-    }
-
-    private void setExistingJobError(String existingJobError) {
-        this.existingJobError = existingJobError;
-    }
-
-    private Session openCurrentSession() {
-        currentSession = getSessionFactory().openSession();
-        return currentSession;
-    }
-
-    private Session openCurrentSessionwithTransaction() {
-        currentSession = getSessionFactory().openSession();
-        currentTransaction = currentSession.beginTransaction();
-        return currentSession;
-    }
-
-    private void closeCurrentSession() {
-        currentSession.close();
-    }
-
-    private void closeCurrentSessionwithTransaction() {
-        currentTransaction.commit();
-        currentSession.close();
-    }
-
-    private static SessionFactory getSessionFactory() {
-        Configuration configuration = new Configuration().configure();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties());
-        return configuration.addAnnotatedClass(JobEntity.class).buildSessionFactory(builder.build());
-    }
-
-    private Session getCurrentSession() {
-        return currentSession;
-    }
-
-    private void setCurrentSession(Session currentSession) {
-        this.currentSession = currentSession;
-    }
-
-    private Transaction getCurrentTransaction() {
-        return currentTransaction;
-    }
-
-    private void setCurrentTransaction(Transaction currentTransaction) {
-        this.currentTransaction = currentTransaction;
-    }
-
     private void persist(JobEntity entity) {
         openCurrentSessionwithTransaction();
         getCurrentSession().save(entity);
@@ -98,12 +47,6 @@ public class JobDao {
         }
         return true;
     }
-
-    /*public void update(JobEntity entity) {
-        openCurrentSessionwithTransaction();
-        getCurrentSession().update(entity);
-        closeCurrentSessionwithTransaction();
-    }*/
 
     public JobEntity findByPrimaryKey(JobPrimaryKey id) {
         openCurrentSession();
@@ -161,7 +104,7 @@ public class JobDao {
             query += " time <= '" + timeTo + "'"; ////////
             isFirstCond = false;
         }
-        
+
         if(isFirstCond)
             return "FROM JobEntity ORDER BY time";
         else
@@ -184,27 +127,42 @@ public class JobDao {
         else return " AND";
     }
 
-
-    /*public void delete(JobPrimaryKey id) {
-        openCurrentSessionwithTransaction();
-        getCurrentSession().delete(findByPrimaryKey(id));
-        closeCurrentSessionwithTransaction();
-    }*/
-
-    /*@SuppressWarnings("unchecked")
-    public List<JobEntity> findAll() {
-        openCurrentSession();
-        List<JobEntity> jobEntities = (List<JobEntity>) getCurrentSession().createQuery("from JobEntity").list();
-        closeCurrentSession();
-        return jobEntities;
+    public String getExistingJobError() {
+        return existingJobError;
     }
 
-    public void deleteAll() {
-        openCurrentSessionwithTransaction();
-        List<JobEntity> entityList = findAll();
-        for (JobEntity entity : entityList) {
-            delete(entity.getPrimaryKey());
-        }
-        closeCurrentSessionwithTransaction();
-    }*/
+    private void setExistingJobError(String existingJobError) {
+        this.existingJobError = existingJobError;
+    }
+
+    private Session openCurrentSession() {
+        currentSession = getSessionFactory().openSession();
+        return currentSession;
+    }
+
+    private Session openCurrentSessionwithTransaction() {
+        currentSession = getSessionFactory().openSession();
+        currentTransaction = currentSession.beginTransaction();
+        return currentSession;
+    }
+
+    private void closeCurrentSession() {
+        currentSession.close();
+    }
+
+    private void closeCurrentSessionwithTransaction() {
+        currentTransaction.commit();
+        currentSession.close();
+    }
+
+    private static SessionFactory getSessionFactory() {
+        Configuration configuration = new Configuration().configure();
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties());
+        return configuration.addAnnotatedClass(JobEntity.class).buildSessionFactory(builder.build());
+    }
+
+    private Session getCurrentSession() {
+        return currentSession;
+    }
 }

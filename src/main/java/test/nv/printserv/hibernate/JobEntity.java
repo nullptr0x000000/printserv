@@ -24,60 +24,40 @@ public class JobEntity implements Serializable {
     @Column(name = "time")
     private Date time;
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public JobPrimaryKey getPrimaryKey() {
-        return primaryKey;
-    }
-
-    private void setPrimaryKey(JobPrimaryKey primaryKey) {
-        this.primaryKey = primaryKey;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    private void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    private void setUser(String user) {
-        this.user = user;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    private void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     @Override
     public String toString()
     {
-        return primaryKey.toString() + "; TYPE: " + getType() + "; USER: " + getUser() + "; AMOUNT: " + getAmount() + "; TIME: " + getTime();
+        return primaryKey.toString() + "; TYPE: " + type + "; USER: " + user + "; AMOUNT: " + amount + "; TIME: " + time;
     }
 
     public JobEntity(){}
 
     public JobEntity(JobRequest jobRequest)
     {
-        setPrimaryKey(new JobPrimaryKey(jobRequest.getId(), jobRequest.getDevice()));
-        setType(jobRequest.getType());
-        setUser(jobRequest.getUser());
-        setAmount(jobRequest.getAmount());
-        setTime(jobRequest.getTime());
+        primaryKey = new JobPrimaryKey(jobRequest.getId(), jobRequest.getDevice());
+        type = jobRequest.getType();
+        user = jobRequest.getUser();
+        amount = jobRequest.getAmount();
+        time = jobRequest.getTime();
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public JobPrimaryKey getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

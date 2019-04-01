@@ -12,9 +12,25 @@ public class JobPrimaryKey implements Serializable {
     @Column(name = "device")
     private String device;
 
-    public int getId(){return id;}
+    @Override
+    public String toString()
+    {
+        return "ID: " + id + "; DEVICE: " + device;
+    }
 
-    public String getDevice(){return device;}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof JobPrimaryKey)) return false;
+        JobPrimaryKey that = (JobPrimaryKey) o;
+        return Objects.equals(id, that.getId()) &&
+                Objects.equals(device, that.getDevice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, device);
+    }
 
     JobPrimaryKey(){}
 
@@ -23,24 +39,9 @@ public class JobPrimaryKey implements Serializable {
         this.device = device;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ID: " + getId() + "; DEVICE: " + getDevice();
-    }
+    public int getId(){return id;}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof JobPrimaryKey)) return false;
-        JobPrimaryKey that = (JobPrimaryKey) o;
-        return Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getDevice(), that.getDevice());
-    }
+    public String getDevice(){return device;}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getDevice());
-    }
 
 }
